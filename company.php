@@ -1,5 +1,4 @@
 <?php
-  session_start();
   require('includes/header.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -61,6 +60,39 @@
   }
 
  ?>
+
+<style>
+
+.agentInsert {
+  text-align: center;
+  padding-bottom: 250px;
+}
+
+.allCompany {
+  padding-top: 100px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.queries {
+  text-align: center;
+}
+
+button {
+  color: black;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+</style>
+
 <div class="allCompany">
   <div class="officeID">
     <h1>Office ID For New Agents</h1>
@@ -77,7 +109,7 @@
   </div>
 
   <div class="agentInsert">
-  <h1>nsert New Agent</h1>
+  <h1>Insert New Agent</h1>
     <form action="company.php" method="POST">
       <div>License Number (6):</div>
       <div>
@@ -109,6 +141,14 @@
       <div><?php echo $message ?></div>
     </form>
 </div>
+
+<div class="queries">
+  <h1>Query Analysis</h1>
+    <div>
+      <button><a href="queries.php">View Queries</a></button>
+    </div>
+</div>
+
 </div>
 
 <?php require('includes/footer.php'); ?>

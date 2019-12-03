@@ -34,7 +34,7 @@ try {
         <link rel="stylesheet" href="vendors/animate-css/animate.css">
         <link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css">
         <!-- main css -->
-        <link rel="stylesheet" href="css/mystyle.css">
+        <!--<link rel="stylesheet" href="css/mystyle.css">-->
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/responsive.css">
     </head>

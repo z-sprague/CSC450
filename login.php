@@ -36,6 +36,35 @@
   }
 
  ?>
+
+<style>
+
+.formElement {
+    width: 50%;
+    text-align: center;
+    margin: 3px 0;
+}
+.formSubmit {
+    width: 100%;
+    text-align: center;
+}
+
+.loginForm {
+  text-align: center;
+  padding: 150px;
+}
+
+.loginInput {
+  padding: 8px;
+}
+
+.formSubmit {
+  padding-top: 5px;
+  cursor: pointer;
+}
+
+</style>
+
         <!--================Header Menu Area =================-->
 
 <section class="home_banner_area">

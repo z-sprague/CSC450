@@ -62,38 +62,26 @@
 
  ?>
 
-  <div class="agentPage">
-  <h1>Insert New Agent</h1>
-    <form action="agent.php" method="POST">
-      <div>License Number (6):</div>
-      <div>
-          <input type="text" name="licNum" placeholder="License Number" required />
-      </div>
-      <div>Office ID:</div>
-      <div>
-          <input type="text" name="ofID" placeholder="Office ID" required />
-      </div>
-      <div>Firstname:</div>
-      <div>
-          <input type="text" name="fname" placeholder="Firstname" required />
-      </div>
-      <div>Lastname:</div>
-      <div>
-          <input type="text" name="lname" placeholder="Lastname" required />
-      </div>
-      <div>Commission Rate:</div>
-      <div>
-          <input type="text" name="comRate" placeholder="Commission Rate" required />
-      </div>
-      <div>Hired Date:</div>
-      <div>
-          <input type="date" name="hDate" required />
-      </div>
-      <div class="formSubmit">
-          <input type="submit" value="Add Agent" />
-      </div>
-      <div><?php echo $message ?></div>
-    </form>
+ <style>
+
+.agentPage {
+  padding-top: 100px;
+  padding-bottom: 250px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+ </style>
+
+<div class="agentPage">
+  <div class="agentInfo">
+    <h1>Insert New Property</h1>
+  </div>
+
+  <div class="agentInfo">
+    <h1>Modify a Property</h1>
+  </div>
+
 </div>
 
 <?php require('includes/footer.php'); ?>
