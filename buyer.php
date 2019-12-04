@@ -1,99 +1,114 @@
 <?php
-  session_start();
   require('includes/header.php');
-
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Agent information
-    $lic = $_POST['licNum'];
-    $office = $_POST['ofID'];
-    $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
-    $rate = $_POST['comRate'];
-    $hired = $_POST['hDate'];
-
-    // License number must be 6 charcters long
-    if (strlen($lic) == 6) {
-      // Get information in the agent table
-      $sql_agent = "SELECT * FROM agents WHERE license_num=:licNum";
-      $data = array (
-        ':licNum' => $lic
-      );
-      $stmt = $conn->prepare($sql_agent);
-      $stmt->execute($data);
-      $agents = $stmt->fetch(PDO::FETCH_ASSOC);
-
-      // If agent is not in the table
-      if (empty($agents)) {
-        // Insert
-        $sql = "Insert into agent (license_num, office_id, firstname, lastname, commission_rate, date_hired)
-                values (:licNum, :ofID, :fname, :lname, :comRate, TO_DATE(:hDate, 'yyyy-mm-dd'))";
-        $val = array (
-          ':licNum' => $lic,
-          ':ofID' => $office,
-          ':fname' => $fname,
-          ':lname' => $lname,
-          ':comRate' => $rate,
-          ':hDate' => $hired
-        );
-        $conn->beginTransaction();
-        $stmt = $conn->prepare($sql);
-        $r = $stmt->execute($val); // Results
-
-        // Check if insertion does not fail
-        if ($r === false) {
-          $message = 'Error Inserting!';
-        }
-        else {
-          $message = 'Agent Inserted!';
-        }
-        // Commit changes
-        $conn->commit();
-      }
-      else {
-        $message = 'License number is currently in use!';
-      }
-
-    }
-    else {
-      $message = 'License code must be alphanumeric and length of 6!';
-    }
-
-  }
-
  ?>
 
-  <div class="agentPage">
-  <h1>Find New Property</h1>
-    <form action="buyer.php" method="POST">
-      <div>License Number (6):</div>
-      <div>
-          <input type="text" name="licNum" placeholder="License Number" required />
-      </div>
-      <div>Office ID:</div>
-      <div>
-          <input type="text" name="ofID" placeholder="Office ID" required />
-      </div>
-      <div>Firstname:</div>
-      <div>
-          <input type="text" name="fname" placeholder="Firstname" required />
-      </div>
-      <div>Lastname:</div>
-      <div>
-          <input type="text" name="lname" placeholder="Lastname" required />
-      </div>
-      <div>Commission Rate:</div>
-      <div>
-          <input type="text" name="comRate" placeholder="Commission Rate" required />
-      </div>
-      <div>Hired Date:</div>
-      <div>
-          <input type="date" name="hDate" required />
-      </div>
-      <div class="formSubmit">
-          <input type="submit" value="Add Agent" />
-      </div>
-      <div><?php echo $message ?></div>
+ <style>
+
+ .buyerPage {
+   padding-top: 100px;
+   padding-bottom: 20px;
+   text-align: center;
+ }
+
+  .buyerSearch {
+    text-align: center;
+    padding: 45px;
+  }
+
+  .buyerPage input {
+    width: 15em;
+  }
+
+  .searchBtn {
+    text-align: center;
+    padding-bottom: 100px;
+  }
+
+  .searchTable {
+    padding-top: 50px;
+  }
+
+  .PropTable {
+    padding-bottom: 50px;
+  }
+
+  .result tr {
+    border-bottom: 1px solid black;
+  }
+
+ </style>
+
+  <div class="buyerPage">
+    <h1>Search For Property</h1>
+    <div class="searchTable">
+      <table align="center" cellpadding="15">
+      <form method="post'">
+      <tr><th>Type</th><td><input type="text" placeholder="House, Apartment or Condo" name="type" required></input></td><td></td>
+        <th>Number of Bedrooms</th><td><input type="text" placeholder="Bedrooms" name="numBed" required></input></td><tr>
+
+      <tr><th>Have a Pool (Y/N)</th><td><input type="text" placeholder="Pool" name="pool" required></input></td><td></td>
+        <th>County</th><td><input type="text" placeholder="County" name="county" required></input></td><tr>
     </form>
-</div>
+    </table>
+  </div>
+  </div>
+
+  <div class="searchBtn">
+    <form method="post">
+      <input type="submit" value="Search"></input>
+    </form>
+  </div>
+
+  <div class="PropTable">
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      // Agent information
+      $type = $_POST['type'];
+      $numBed = $_POST['numBed'];
+      $pool = $_POST['pool'];
+      $county = $_POST['county'];
+
+      // Create query to search for property
+      $sql = "SELECT * FROM property where p_type=:type";
+      //AND num_of_bedrooms='$numBed' AND have_pool='$pool' AND county='$county'";
+      //$sql = "SELECT * FROM property";
+      //$date = array (
+      //  ':type' => $type
+      //);
+
+
+      //$conn->beginTransaction();
+      $stmt = $conn->prepare($sql);
+      $stmt->bindParam(':type', $type);
+      $stmt->execute(); // Results
+      $r = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      echo "<table class='result' align='center' cellpadding='15'>
+             <tr>
+               <th>Property ID</th>
+               <th>County</th>
+               <th>Address</th>
+               <th>City</th>
+               <th>State</th>
+               <th>Zip Code</th>
+               <th>Type</th>
+               <th>Price</th>
+               <th>Date Built</th>
+               <th># Rooms</th>
+               <th># Bedrooms</th>
+               <th>Sqft</th>
+               <th>Have Pool</th>
+             </tr>";
+
+      foreach ($r as $row) {
+        echo "<tr><td>".$row[0]."</td><td>".$row[1]."</td><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td>
+          <td>".$row[5]."</td><td>".$row[6]."</td><td>".$row[7]."</td><td>".$row[8]."</td><td>".$row[9]."</td><td>".$row[10]."</td>
+          <td>".$row[11]."</td><td>".$row[12]."</td></tr>";
+      }
+      echo "</table>";
+
+      }
+    ?>
+  </div>
 
 <?php require('includes/footer.php'); ?>

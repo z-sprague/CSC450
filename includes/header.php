@@ -55,17 +55,7 @@ try {
 						<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 							<ul class="nav navbar-nav menu_nav ml-auto">
 								<li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-								<li class="nav-item"><a class="nav-link" href="properties.html">Properties</a></li>
-								<li class="nav-item"><a class="nav-link" href="agents.html">Agents</a></li>
-                <!--<li class="nav-item active"><a class="nav-link" href="login.php">Login</a></li>-->
-                <?php session_start();
-        				if (isset($_SESSION['uname'])) {
-        					echo '<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>';
-        				}
-        				else {
-        					echo '<li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>';
-        				}
-        				?>
+                <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
 							</ul>
 						</div>
 					</div>
